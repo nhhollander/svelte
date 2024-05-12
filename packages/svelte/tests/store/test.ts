@@ -101,9 +101,13 @@ describe('writable', () => {
 	it('survives an unhandled exception in subscriber', () => {
 		const store = writable(0);
 		let num = 0;
-		store.subscribe((v) => { num = v });
+		store.subscribe((v) => {
+			num = v;
+		});
 		assert.throws(() => {
-			store.subscribe(() => { throw new Error("Unhandled Error!"); });
+			store.subscribe(() => {
+				throw new Error('Unhandled Error!');
+			});
 		});
 		assert.doesNotThrow(() => store.set(1));
 		assert.equal(num, 1);
