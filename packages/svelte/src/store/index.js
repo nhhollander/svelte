@@ -62,7 +62,11 @@ export function writable(value, start = noop) {
 				}
 				if (run_queue) {
 					for (let i = 0; i < subscriber_queue.length; i += 2) {
-						subscriber_queue[i][0](subscriber_queue[i + 1]);
+						try {
+							subscriber_queue[i][0](subscriber_queue[i + 1]);
+						} catch(e) {
+							console.error("Unhandled exception in store subscriber", e);
+						}
 					}
 					subscriber_queue.length = 0;
 				}
